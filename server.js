@@ -17,7 +17,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173', // for Vite (dev)
   'http://localhost:3000', // for CRA (if used)
-  'https://shortly-aft.onrender.com/' // ✅ your hosted frontend (no slash)
+  'https://url-shortner-front-2gub.onrender.com' // ✅ your hosted frontend (no slash)
   
 ];
 
