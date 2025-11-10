@@ -15,8 +15,9 @@ const app = express();
 // --- Middleware Setup ---
 // ✅ Allow multiple origins (useful for hosting)
 const allowedOrigins = [
+    'http://localhost:5173',
   'http://localhost:3000',                // React dev
-  'https://your-frontend-domain.vercel.app', // your hosted frontend
+  'https://shortly-aft.netlify.app/', // your hosted frontend
 ];
 
 app.use(
