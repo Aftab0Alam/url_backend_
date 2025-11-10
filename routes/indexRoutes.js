@@ -10,24 +10,22 @@ router.get('/:shortCode', async (req, res) => {
   try {
     const { shortCode } = req.params;
 
-    // Find the URL mapping in the database
+    // ✅ Match the same field name from your schema
     const url = await Url.findOne({ shortCode });
 
     if (url) {
-      // Update click count (Analytics feature)
+      // Optional: track clicks
       url.clicks++;
       await url.save();
 
-      // Redirect the user to the original URL
-      // Use 302 for temporary redirect (good for analytics)
-      return res.redirect(url.originalUrl); 
+      // Redirect to original link
+      return res.redirect(url.originalUrl);
     } else {
-      // If short code not found
-      return res.status(404).json('No URL found');
+      return res.status(404).json({ message: 'No URL found' });
     }
   } catch (err) {
-    console.error(err);
-    res.status(500).json('Server Error');
+    console.error('Redirect Error:', err);
+    res.status(500).json({ message: 'Server Error' });
   }
 });
 

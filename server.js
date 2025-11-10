@@ -13,30 +13,8 @@ dotenv.config();
 const app = express();
 
 // --- Middleware Setup ---
-// ✅ Allow both local + deployed frontends
-const allowedOrigins = [
-  'http://localhost:5173', // for Vite (dev)
-  'http://localhost:3000', // for CRA (if used)
-  'https://url-shortner-front-2gub.onrender.com' // ✅ your hosted frontend (no slash)
-  
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.log('❌ Blocked by CORS:', origin);
-        callback(new Error('CORS not allowed for this origin'));
-      }
-    },
-    credentials: true,
-  })
-);
-
-// ✅ Parse JSON body
-app.use(express.json());
+app.use(cors()); // ✅ Allow all origins (simple & safe for testing)
+app.use(express.json()); // ✅ Parse JSON body
 
 // --- Database Connection ---
 const connectDB = async () => {
@@ -54,17 +32,18 @@ const connectDB = async () => {
 connectDB();
 
 // --- Routes ---
+app.use('/api/url', urlRoutes); // Handles POST /api/url/shorten
+app.use('/', indexRoutes);      // Handles GET /:shortCode redirects
+
+// --- Default Route ---
 app.get('/', (req, res) => {
   res.send('🚀 URL Shortener API is running...');
 });
 
-app.use('/api/url', urlRoutes);
-app.use('/', indexRoutes);
-
 // --- Start Server ---
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
+app.listen(PORT, () => {
   console.log(
     `✅ Server running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`
-  )
-);
+  );
+});
