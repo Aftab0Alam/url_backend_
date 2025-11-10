@@ -13,11 +13,11 @@ dotenv.config();
 const app = express();
 
 // --- Middleware Setup ---
-// ✅ Allow multiple origins (useful for hosting)
+// ✅ Allow both local + deployed frontends
 const allowedOrigins = [
-    'http://localhost:5173',
-  'http://localhost:3000',                // React dev
-  'https://shortly-aft.netlify.app/', // your hosted frontend
+  'http://localhost:5173', // for Vite (dev)
+  'http://localhost:3000', // for CRA (if used)
+  'https://shortly-aft.netlify.app' // ✅ your hosted frontend (no slash)
 ];
 
 app.use(
@@ -26,6 +26,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.log('❌ Blocked by CORS:', origin);
         callback(new Error('CORS not allowed for this origin'));
       }
     },
