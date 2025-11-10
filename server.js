@@ -17,9 +17,10 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173', // for Vite (dev)
   'http://localhost:3000', // for CRA (if used)
-  'https://shortly-aft.netlify.app' // ✅ your hosted frontend (no slash)
+  'https://shortly-aft.onrender.com/' // ✅ your hosted frontend (no slash)
+  
 ];
-
+cd 
 app.use(
   cors({
     origin: function (origin, callback) {
