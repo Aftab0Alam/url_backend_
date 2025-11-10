@@ -20,7 +20,7 @@ const allowedOrigins = [
   'https://shortly-aft.onrender.com/' // ✅ your hosted frontend (no slash)
   
 ];
-cd 
+
 app.use(
   cors({
     origin: function (origin, callback) {
